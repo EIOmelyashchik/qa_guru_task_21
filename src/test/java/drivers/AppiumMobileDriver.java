@@ -17,7 +17,7 @@ public class AppiumMobileDriver implements WebDriverProvider {
 
         desiredCapabilities.setCapability("platformName", appiumConfig.platformName());
         desiredCapabilities.setCapability("deviceName", appiumConfig.deviceName());
-        desiredCapabilities.setCapability("version", appiumConfig.deviceName());
+        desiredCapabilities.setCapability("version", appiumConfig.version());
         desiredCapabilities.setCapability("locale", appiumConfig.locale());
         desiredCapabilities.setCapability("language", appiumConfig.language());
         desiredCapabilities.setCapability("appPackage", appiumConfig.appPackage());
