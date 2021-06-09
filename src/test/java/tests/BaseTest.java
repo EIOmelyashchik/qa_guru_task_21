@@ -3,8 +3,7 @@ package tests;
 import com.codeborne.selenide.Configuration;
 import config.DeviceHost;
 import config.ProjectData;
-import drivers.AppiumMobileDriver;
-import drivers.BrowserstackMobileDriver;
+import drivers.AndroidMobileDriver;
 import helpers.AttachHelper;
 import helpers.BrowserStackHelper;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -23,11 +22,7 @@ public class BaseTest {
     public static void setup() {
         addListener("AllureSelenide", new AllureSelenide());
 
-        if (ProjectData.deviceFarm().equals(DeviceHost.BROWSER_STACK))
-            Configuration.browser = BrowserstackMobileDriver.class.getName();
-        else
-            Configuration.browser = AppiumMobileDriver.class.getName();
-
+        Configuration.browser = AndroidMobileDriver.class.getName();
         Configuration.startMaximized = false;
         Configuration.browserSize = null;
         Configuration.timeout = 10000;
@@ -42,10 +37,10 @@ public class BaseTest {
     public void afterEach() {
         AttachHelper.screenshotAs("Last screenshot");
 
-        if (!ProjectData.deviceFarm().equals(DeviceHost.LOCAL)) {
+        if (!ProjectData.deviceHost().equals(DeviceHost.LOCAL)) {
             String sessionId = getSessionId();
             AttachHelper.attachVideo(sessionId);
-            if (ProjectData.deviceFarm().equals(DeviceHost.BROWSER_STACK))
+            if (ProjectData.deviceHost().equals(DeviceHost.BROWSER_STACK))
                 AttachHelper.attachAsText("Browserstack build link",
                         BrowserStackHelper.getBSPublicLink(sessionId));
         }

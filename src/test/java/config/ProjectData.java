@@ -10,7 +10,7 @@ public class ProjectData {
     public static final DeviceHostConfig deviceHostConfig =
             ConfigFactory.create(DeviceHostConfig.class, System.getProperties());
 
-    public static DeviceHost deviceFarm() {
+    public static DeviceHost deviceHost() {
         return DeviceHost.valueOf(deviceHostConfig.deviceHost().toUpperCase());
     }
 }

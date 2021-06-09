@@ -10,17 +10,13 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static config.ProjectData.deviceHost;
 
 public class AttachHelper {
 
     @Attachment(value = "{attachName}", type = "text/plain")
     public static String attachAsText(String attachName, String message) {
         return message;
-    }
-
-    @Attachment(value = "Page source", type = "text/plain")
-    public static byte[] pageSource() {
-        return getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8);
     }
 
     @Attachment(value = "{attachName}", type = "image/png")
@@ -36,11 +32,9 @@ public class AttachHelper {
     }
 
     private static String getVideoUrl(String sessionId) {
-        DeviceHost deviceHost = ProjectData.deviceFarm();
-
-        if (deviceHost.equals(DeviceHost.BROWSER_STACK)) {
+        if (deviceHost().equals(DeviceHost.BROWSER_STACK)) {
             return BrowserStackHelper.getBrowserstackVideoUrl(sessionId);
-        } else if (deviceHost.equals(DeviceHost.SELENOID)) {
+        } else if (deviceHost().equals(DeviceHost.SELENOID)) {
             return AppiumHelper.getSelenoidVideoUrl(sessionId);
         }
         return null;
